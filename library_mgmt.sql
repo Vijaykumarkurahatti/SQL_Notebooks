@@ -145,4 +145,118 @@ select title, count(title) as noOftimesborrowed,
  from borrowed_books
  join Books on Books.Book_id=Borrowed_Books.Book_Id
  group by Title
+
+-- DDL; Add a new column named fine_amount to the BorrowedBooks table. This column will store the fine amount (in USD) for overdue books. Set an appropriate default value for this column.
+alter table Borrowed_Books
+  add  fine_amounts money not null 
+  constraint finePK default 5.00
+
+-- write a SQL query to calculate the total fines collected from all overdue books. Use the fine_amount column and consider all books that are currently overdue.
+select sum(fine_amounts) from Borrowed_Books as total_fine
+ where DATEDIFF(day,borrow_date,return_date)>14
+
+-- Find the top 5 members who have borrowed the most books. Display their names and the number of books they have borrowed.
+select top 5 name, count(name)As total_borrow from 
+Borrowed_Books
+join Members on Members.Member_id=Borrowed_Books.Member_Id
+group by name
+order by total_borrow desc
+
+-- Add a UNIQUE constraint to the book_id and member_id columns in the BorrowedBooks table to prevent a member from borrowing the same book more than once simultaneously.
+alter table borrowed_books
+add constraint unique_borrowed
+unique(book_id, member_id)
+
+--  Write a query to find the books that are currently available for borrowing (i.e., books with at least one available copy). Display the book titles and the number of available copies.
+select title,Available_copies from books 
+where Available_Copies>= 1
+  
+-- Calculate the late fees for each overdue book. Late fees are calculated as #200 per day for each day a book is overdue. Display the book title, the name of the member who borrowed it, the number of days it is overdue, and the calculated late fee.
+select title,name,DATEDIFF(day,borrow_date,return_date)-14 as overdue_days,
+CASE
+WHEN 
+DATEDIFF(day,borrow_date,return_date)>14
+THEN
+200*(select DATEDIFF(day,borrow_date,return_date)-14)
+WHEN 
+DATEDIFF(day,borrow_date,return_date)<14
+THEN 0
+ELSE
+0
+END AS LATE_FEE
+FROM BOOKS
+join
+Borrowed_Books on Borrowed_Books.Book_Id=Books.Book_id
+join 
+Members on members.member_id=borrowed_books.member_id
+
+-- Calculate the average duration in months for which books are borrowed. Display the book title and the average duration in months. Consider fractional months as well.
+select title, avg( datediff(month,borroW_date,RETURN_DATE))AS AVERAGE_MONTH
+from BOOKS
+JOIN BORROWED_BOOKS 
+ON BOOKS.BOOK_ID=BORROWED_BOOKS.BOOK_ID
+GROUP BY TITLE
+
+-- Create a query that categorizes members based on their borrowing behavior. Use a CASE statement to categorize them as “Frequent Borrowers” if they have borrowed more than 10 books, “Regular Borrowers” if they have borrowed between 5 and 10 books, and “Occasional Borrowers” if they have borrowed less than 5 books.
+SELECT COUNT(MEMBER_ID) AS NO_OF_BOOKS_BORROWED,
+CASE
+WHEN
+COUNT(MEMBER_ID)<5
+THEN
+'OCCASIONAL BORROWERS'
+WHEN
+COUNT(MEMBER_ID) 
+BETWEEN 5 AND 10
+THEN
+'REGULAR BORROWERS'
+WHEN
+COUNT(MEMBER_ID)>10
+THEN
+'FREQUENT BORROWER'
+END AS BORROWED_BEHAVIOR
+FROM Borrowed_Books
+GROUP BY Member_Id
+
+-- Find members who return books quickly. Calculate the average duration it takes for each member to return borrowed books, and then identify members whose average return time is less than 7 days.
+SELECT NAME,AVG(DATEDIFF(DAY,BORROW_DATE,(RETURN_DATE))) AS AVERAGE_RETURN_DURATION
+FROM Members
+JOIN Borrowed_Books ON
+Borrowed_Books.Member_Id=Members.Member_id
+GROUP BY NAME
+HAVING
+AVG(DATEDIFF(DAY,BORROW_DATE, ISNULL(RETURN_DATE,GETDATE())))<7
+
+-- Identify books with late fees exceeding #2000. Display the book title and the total late fees for each book using a CASE statement.
+  SELECT TITLE AS BOOK_TITLE, 
+SUM(
+CASE
+WHEN
+ DATEDIFF(day,borrow_date,return_date)>14
+ THEN
+ 200* DATEDIFF(day,borrow_date,return_date)-14
+ ELSE
+ 0
+ END)AS LATE_FEE
+ FROM Borrowed_Books
+ JOIN BOOKS ON
+ BOOKS.Book_id=Borrowed_Books.Book_Id
+ GROUP BY TITLE
+ HAVING SUM(CASE
+WHEN
+ DATEDIFF(day,borrow_date,return_date)>14
+ THEN
+ 200* DATEDIFF(day,borrow_date,return_date)-14
+ ELSE
+ 0
+ END
+ )>2000
+
+
+
+
+  -- Data Deletion (DML)
+
+-- Remove a borrowing record when a book is returned.
+delete  from  Borrowed_Books
+where Return_Date is null
   
