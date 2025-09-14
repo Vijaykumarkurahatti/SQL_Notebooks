@@ -89,12 +89,60 @@ Insert into Borrowed_Books (Borrow_Id, Book_Id, Member_Id, Borrow_Date, Return_D
 (0100019, 005518, 100090, '20230618', '20230625'),
 (0100020, 005519, 100099, '20230429', '20230404'),
 (0100021, 005520, 1000100, '20230505', '20230515')
+
+
+  -- Get a list of booksborrowed by a specific member(e.g Thomas_Partey)
+SELECT name,title FROM Members as M
+join
+Borrowed_Books as bb
+on
+m.Member_id=bb.Member_Id
+join
+Books as B
+on bb.Book_Id=B.Book_id
+where name='Thomas_Partey'
+
+
+  -- . Find members who borrowed a specific book(e.g The_Sound_And_The_Fury)
+SELECT name,title FROM Members as M
+join
+Borrowed_Books as bb
+on
+m.Member_id=bb.Member_Id
+join
+Books as B
+on bb.Book_Id=B.Book_id
+where title='The_Sound_And_The_Fury'
+
+  -- Update the number of available copies of a book after it’s borrowed
+update books
+set Available_Copies= Available_copies - 1
+where book_id=556
+
+-- Insert a new borrowing records.
+insert into borrowed_books
+values(0100023,005519,100080,'20231102',dateadd(month,3,'20231102'))
+
+
+  -- Write a query to find all books that are currently borrowed and overdue (i.e., not returned within 14 days from the borrow date). Display the book titles and the names of members who borrowed them.
+select title,name
+from Borrowed_Books as bb
+join Members as Ms on bb.Member_id=Ms.Member_Id
+join Books on Books.Book_id=bb.Book_Id
+where 
+ DATEDIFF(DAY,Borrow_Date,return_date)>14
+
+  -- Find the most popular genre in the library. Display the genre with the highest total number of books borrowed.
+select top 1 genre, title, genre, count(*) as total_borrow
+from Books
+join Borrowed_Books on Borrowed_Books.Book_Id=Books.Book_id
+group by genre, Title
+order by total_borrow desc
+
+-- Calculate the average duration a book is borrowed by members. Display the book title, the average duration in days, and the number of times it has been borrowed.
+select title, count(title) as noOftimesborrowed,
+ avg(datediff(day,borrow_date,return_date)) average_duration
+ from borrowed_books
+ join Books on Books.Book_id=Borrowed_Books.Book_Id
+ group by Title
   
--- /Data Retrieval
-  -- 1 Get a list of books borrowed by specific member Ex: Thomas_partey
-  select name,title from members as M
-  join Borrowed_books as bb
-  on m.Member_id = bb.Member_id
-  join Books as B
-  on bb.Book_id = B.book_id
-  where name = 'Thomas_partey'
