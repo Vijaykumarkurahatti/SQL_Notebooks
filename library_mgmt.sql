@@ -90,4 +90,11 @@ Insert into Borrowed_Books (Borrow_Id, Book_Id, Member_Id, Borrow_Date, Return_D
 (0100020, 005519, 100099, '20230429', '20230404'),
 (0100021, 005520, 1000100, '20230505', '20230515')
   
-
+-- /Data Retrieval
+  -- 1 Get a list of books borrowed by specific member Ex: Thomas_partey
+  select name,title from members as M
+  join Borrowed_books as bb
+  on m.Member_id = bb.Member_id
+  join Books as B
+  on bb.Book_id = B.book_id
+  where name = 'Thomas_partey'
