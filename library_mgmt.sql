@@ -40,3 +40,29 @@ Insert into Books (Book_id, Title, AUthor, Published_Year, Genre, Available_copi
   (05518, 'A_Handful_Of_Dust', 'Evelyn_Waugh', '19340603', 'Fiction', '10000'),
   (05519, 'As_I_Lay_Dying', 'William_Faulkner', '19300302', 'Black_Comedy', '10000'),
   (05520, 'The_Heart_Of_The_Matter', 'Graham_Greene', '19480302', 'Nove', '10000')
+
+
+-- Insert into Members Table
+Insert into Members (Member_id, NAme, Email, Join_date) Values
+  (10009,'Thomas_Partey', 'tpartey4@yahoo.com', '19900304'),
+  (100010, 'Emmanuel_Adebayo', 'emmadb@gmail.com', '20000112'),
+  (100019, 'Kanu_Nwankwo', 'nwankwok1@hotmail.com', '20030906'),
+  (100020, 'Wilfred_Ndidi', 'wilfndi1@gmail.com', '20050206'),
+  (100029, 'Kelechi_Ihenacho', 'kel_nacho9@outlook.com', '20090402'),
+  (100030, 'Taiwo_Awoniyi', 'taiwoawo7@gmail.com', '20020403'),
+  (100039, 'Victor_Osimehn', 'vicosinapple@gmail.com', '20050406'),
+  (100040, 'Bukayo_Saka', 'bukayosak@yahoo.com', '19900506'),
+  (100049, 'Sadio_Mane', 'sadioman9@gmail.com', '20000504'),
+  (100050, 'Emmanuel_Akanji', 'emmak@yahoo.com', '20050605' ),
+  (100059, 'Musa_Dembele', 'dembelemu@gmail.com','19890504'),
+  (100060, 'Musa_Sissoko', 'musissoko4@yahoo.com', '19950608'),
+  (100069, 'Kolo_Muani', 'kolomua1@hotmail.com', '19900304'),
+  (100070, 'Kylian_Mbappe', 'kylianmba09@gmail.com', '20060905'),
+  (100079, 'Eduado_Camavinga', 'educamavin5@mail.com', '20020703'),
+  (100080, 'Ansu_Fati', 'ansufi4@gmail.com', '19900305'),
+  (100089, 'Moses_Caceido', 'moscaceido1@gmail.com', '19990406'),
+  (100090, 'Obafemi_Martins', 'martins4real@gmail.com', '20000902'),
+  (100099, 'Mikel_Obi', 'therealmikeobi@yahoo.com', '20070403'),
+  (1000100, 'Claudio_Makalele', 'claudimak4@outlook.com', '19990503')
+  
+
