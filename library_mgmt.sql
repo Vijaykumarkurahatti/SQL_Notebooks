@@ -19,7 +19,7 @@ create table Borrowed_books(
   Retuen_date Date, foreign key (Book_id) references Books(Book_id),
   foreign key (Member_id) referneces Members (Member_id) )
 
-Insert into Books (Book_id, Title, AUthor, Published_Year, Genre, Available_copies) values
+Insert into Books (Book_id, Title, AUthor, Published_Year, Genre, Available_copies) values 
   (00551, 'The Great Gatsby', 'F_Scott_Fitzgerald, '19250410', 'Tragedy','10000'),
   (00552, 'ULYSSES', 'James_Joyce', '19220202', 'Modernist_Novel', '10000'),
   (00553, 'Lolita', 'Vladimir_Nabokov', '19552001', 'Novel', '10000'),
@@ -40,9 +40,10 @@ Insert into Books (Book_id, Title, AUthor, Published_Year, Genre, Available_copi
   (05518, 'A_Handful_Of_Dust', 'Evelyn_Waugh', '19340603', 'Fiction', '10000'),
   (05519, 'As_I_Lay_Dying', 'William_Faulkner', '19300302', 'Black_Comedy', '10000'),
   (05520, 'The_Heart_Of_The_Matter', 'Graham_Greene', '19480302', 'Nove', '10000')
+  
 
-
--- Insert into Members Table
+-- '''
+-- Insert into Members Table'''
 Insert into Members (Member_id, NAme, Email, Join_date) Values
   (10009,'Thomas_Partey', 'tpartey4@yahoo.com', '19900304'),
   (100010, 'Emmanuel_Adebayo', 'emmadb@gmail.com', '20000112'),
@@ -64,5 +65,29 @@ Insert into Members (Member_id, NAme, Email, Join_date) Values
   (100090, 'Obafemi_Martins', 'martins4real@gmail.com', '20000902'),
   (100099, 'Mikel_Obi', 'therealmikeobi@yahoo.com', '20070403'),
   (1000100, 'Claudio_Makalele', 'claudimak4@outlook.com', '19990503')
+
+  -- '''
+-- Insert into Borrowed Books'''
+Insert into Borrowed_Books (Borrow_Id, Book_Id, Member_Id, Borrow_Date, Return_Date) values
+(010002, 00551, 10009, '20230819', '20230829'),
+(010003, 00552, 100010, '20230513', '20230525'),
+(010004, 00553, 100019, '20230101', '20230110'),
+(010005, 00554, 100020, '20230305', '20230315'),
+(010006, 00555, 100029, '20230510', '20230515'),
+(010007, 00556, 100030, '20230220', '20230330'),
+(010008, 00557, 100039, '20230430', '20230515'),
+(010009, 00558, 100040, '20230429', '20230510'),
+(0100010, 00559, 100049, '20230820', '20230825'),
+(0100011, 005510, 100050, '20230201', '20230210'),
+(0100012, 005511, 100059, '20231215', '20231230'),
+(0100013, 005512, 100060, '20230512', '20230517'),
+(0100014, 005513, 100069, '20230218', '20230223'),
+(0100015, 005514, 100070, '20230130', '20230220'),
+(0100016, 005515, 100079, '20230404', '20230409'),
+(0100017, 005516, 100080, '20231010', '20231020'),
+(0100018, 005517, 100089, '20230415', '20230420'),
+(0100019, 005518, 100090, '20230618', '20230625'),
+(0100020, 005519, 100099, '20230429', '20230404'),
+(0100021, 005520, 1000100, '20230505', '20230515')
   
 
